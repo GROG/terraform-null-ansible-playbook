@@ -6,7 +6,7 @@ locals {
   args = join(" ", compact(var.args))
   env  = join(" ", var.env)
 
-  collections_paths = var.collections_paths != "" ? "ANSIBLE_COLLECTIONS_PATHS=${local.collections_paths} " : ""
+  collections_paths = var.collections_paths != "" ? "ANSIBLE_COLLECTIONS_PATHS=${var.collections_paths} " : ""
 
   # Format tags
   tags      = length(var.tags) > 0 ? "--tags ${join(",", var.tags)}" : ""
