@@ -1,9 +1,9 @@
-# terraform-null-ansible-collection-playbook
+# terraform-null-ansible-playbook
 
 [![Latest tag][tag_image]][tag_url]
 [![Gitter chat][gitter_image]][gitter_url]
 
-A Terraform module for applying Ansible playbooks from a collection.
+A Terraform module for applying Ansible playbooks.
 
 ## Usage
 
@@ -14,16 +14,18 @@ resource "aws_instance" "node" {
 }
 
 # Add ansible module
+module "my_collection" {
+  source = "GROG/ansible-collection/null"
+  name   = "my_namespace.my_collection"
+}
+
 module "node-ansible-config" {
-  source = "GROG/ansible-collection-playbook/null"
+  source = "GROG/ansible-playbook/null"
 
-  # Collection to install
-  collection = {
-    name   = "my.collection"
-    source = "https://github.com/my/ansible-collection"
-  }
+  # Use a custom collections path
+  collections_paths = module.my_collection.collections_paths
 
-  # Playbook to run (should be from the above collection)
+  # Playbook to run (in this case from the above collection)
   playbook = "my.collection.bootstrap.yml"
 
   # Target, this can be a comma separated list
@@ -56,14 +58,13 @@ module "node-ansible-config" {
 
 | Variable | Description | Type | Default value |
 |----------|-------------|------|---------------|
+| `playbook` | Playbook to run, can be a local file or from a local collection | `string` | |
 | `hosts` | Single host or comma separated list on which the roles will be applied | `string` | |
 | `vars` | Ansible variables which will be passed with `-e` | `map` | |
 | `args` | Ansible command arguments | `[]string` | `["-b"]` |
 | `env` | Environment variables that are set | `[]string` | `["ANSIBLE_NOCOWS=true", "ANSIBLE_RETRY_FILES=false", "ANSIBLE_HOST_KEY_CHECKING=false"]` |
 | `tags` | Tags to use when creating the resource | `[]string`  | `[]` |
 | `skip` | Tags to skip when creating the resource | `[]string`  | `[]` |
-<!--| `on_destroy_tags` | Tags to use when destroying the resource | `[]string`  | `[]` |-->
-<!--| `on_destroy_tags_skip` | Tags to skip when destroying the resource | `[]string`  | `[]` |-->
 
 ## Outputs
 
@@ -83,10 +84,10 @@ By [G. Roggemans][groggemans]
 
 MIT
 
-[tag_image]:    https://img.shields.io/github/tag/GROG/terraform-null-ansible-collection-playbook.svg
-[tag_url]:      https://github.com/GROG/terraform-null-ansible-collection-playbook
+[tag_image]:    https://img.shields.io/github/tag/GROG/terraform-null-ansible-playbook.svg
+[tag_url]:      https://github.com/GROG/terraform-null-ansible-playbook
 [gitter_image]: https://badges.gitter.im/GROG/chat.svg
 [gitter_url]:   https://gitter.im/GROG/chat
 
-[issues]:       https://github.com/GROG/terraform-null-ansible-collection-playbook
+[issues]:       https://github.com/GROG/terraform-null-ansible-playbook
 [groggemans]:   https://github.com/groggemans

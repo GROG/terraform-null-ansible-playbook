@@ -1,17 +1,13 @@
 ###############################################################################
 
-variable "collection" {
-  type = object({
-    name = string,
-    source = string
-  })
-
-  description = "Collection to install"
-}
-
 variable "playbook" {
-  type = string
-  description = "Playbook from the collection to run"
+  type        = string
+  description = <<EOF
+Playbook to run
+
+The module won't install the playbook, you should make sure it's available on
+the system.
+EOF
 }
 
 variable "hosts" {
@@ -27,9 +23,15 @@ EOF
 ###############################################################################
 # Optional parameters
 
+variable "collections_paths" {
+  type        = string
+  default     = ""
+  description = "Collections paths to used during playbook run"
+}
+
 variable "vars" {
-  type = any
-  default = {}
+  type        = any
+  default     = {}
   description = "Ansible variables to pass to the playbook"
 }
 
@@ -46,9 +48,9 @@ variable "env" {
   type = list(string)
 
   default = [
-  "ANSIBLE_NOCOWS=true",
-  "ANSIBLE_RETRY_FILES_ENABLED=false",
-  "ANSIBLE_HOST_KEY_CHECKING=false",
+    "ANSIBLE_NOCOWS=true",
+    "ANSIBLE_RETRY_FILES_ENABLED=false",
+    "ANSIBLE_HOST_KEY_CHECKING=false",
   ]
 
   description = <<EOF
@@ -74,32 +76,32 @@ EOF
 }
 
 variable "tags_skip" {
-  type    = list(string)
-  default = []
+  type        = list(string)
+  default     = []
   description = "Tags to skip when creating the object"
 }
 
 #variable "on_destroy_tags" {
-  #type = list(string)
-  #default = []
+#type = list(string)
+#default = []
 
-  #description = <<EOF
+#description = <<EOF
 #If set, the playbook will also be run on destruction of the object, using the
 #specified tags.
 #EOF
 #}
 
 #variable "on_destroy_tags_skip" {
-  #type = list(string)
-  #default = []
-  #description = "Tags to skip when destroying the object"
+#type = list(string)
+#default = []
+#description = "Tags to skip when destroying the object"
 #}
 
 #variable "on_destroy_failure" {
-  #type    = string
-  #default = "continue"
+#type    = string
+#default = "continue"
 
-  #description = <<EOF
+#description = <<EOF
 #Should we fail if the destroy action failed? ["conftinue","fail"] ("continue")
 #EOF
 #}
