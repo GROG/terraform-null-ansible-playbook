@@ -17,19 +17,22 @@ resource "aws_instance" "node" {
 module "node-ansible-config" {
   source = "GROG/ansible-collection-playbook/null"
 
+  # Collection to install
   collection = {
     name   = "my.collection"
     source = "https://github.com/my/ansible-collection"
   }
 
+  # Playbook to run (should be from the above collection)
   playbook = "my.collection.bootstrap.yml"
 
   # Target, this can be a comma separated list
   hosts = "${aws_instance.node.public_ip}"
 
+  # Tags to run from the playbook
   tags = ["deploy"]
 
-  # Pass variables to the role
+  # Pass variables to the playbook
   vars = {
     test     = "1,2,3,4"
     list_var = ["one", "two", "three", "four"]
