@@ -23,7 +23,7 @@ module "node-ansible-config" {
   source = "GROG/ansible-playbook/null"
 
   # Use a custom collections path
-  collections_paths = module.my_collection.collections_paths
+  collections_path = module.my_collection.collections_path
 
   # Playbook to run (in this case from the above collection)
   playbook = "my.collection.bootstrap.yml"

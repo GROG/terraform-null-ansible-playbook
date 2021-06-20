@@ -6,7 +6,7 @@ locals {
   args = join(" ", compact(var.args))
   env  = join(" ", var.env)
 
-  collections_paths = var.collections_paths != "" ? "ANSIBLE_COLLECTIONS_PATHS=${var.collections_paths} " : ""
+  collections_path = var.collections_path != "" ? "ANSIBLE_COLLECTIONS_PATH=${var.collections_path} " : ""
 
   # Format tags
   tags      = length(var.tags) > 0 ? "--tags ${join(",", var.tags)}" : ""
@@ -14,7 +14,7 @@ locals {
 
   # These commands run the ansible playbook included in this module with the
   # correct parameters and environment variables
-  ansible_command = "${local.collections_paths}${local.env} ansible-playbook ${var.playbook} -e '${local.vars}' -i '${var.hosts},' ${local.args}"
+  ansible_command = "${local.collections_path}${local.env} ansible-playbook ${var.playbook} -e '${local.vars}' -i '${var.hosts},' ${local.args}"
   create_command  = "${local.ansible_command} ${local.tags} ${local.tags_skip}"
   #destroy_command = "${local.ansible_command} ${local.tags} ${local.tags_skip}"
 }

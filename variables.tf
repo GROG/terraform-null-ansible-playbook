@@ -23,10 +23,10 @@ EOF
 ###############################################################################
 # Optional parameters
 
-variable "collections_paths" {
+variable "collections_path" {
   type        = string
   default     = ""
-  description = "Collections paths to used during playbook run"
+  description = "Collections path to used during playbook run"
 }
 
 variable "vars" {
