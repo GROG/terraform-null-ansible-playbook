@@ -1,9 +1,7 @@
 ###############################################################################
 
 output "id" {
-  #value = var.on_destroy_failure == "continue" ? null_resource.playbook_continue.0.id : null_resource.playbook_fail.0.id
-  value = null_resource.playbook.id
-
+  value       = null_resource.playbook.id
   description = <<EOF
 Resource ID
 

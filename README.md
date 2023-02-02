@@ -13,12 +13,13 @@ resource "aws_instance" "node" {
     # ...
 }
 
-# Add ansible module
+# (Optional) use a module to get your ansible playbook collection
 module "my_collection" {
   source = "GROG/ansible-collection/null"
   name   = "my_namespace.my_collection"
 }
 
+# Use this module to run a playbook
 module "node-ansible-config" {
   source = "GROG/ansible-playbook/null"
 
@@ -26,7 +27,7 @@ module "node-ansible-config" {
   collections_path = module.my_collection.collections_path
 
   # Playbook to run (in this case from the above collection)
-  playbook = "my.collection.bootstrap.yml"
+  playbook = "my_namespace.my_collection.bootstrap.yml"
 
   # Target, this can be a comma separated list
   hosts = "${aws_instance.node.public_ip}"

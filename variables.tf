@@ -26,7 +26,7 @@ EOF
 variable "collections_path" {
   type        = string
   default     = ""
-  description = "Collections path to used during playbook run"
+  description = "Collections path to be used during playbook run"
 }
 
 variable "vars" {
@@ -55,10 +55,6 @@ variable "env" {
 
   description = <<EOF
 Environment variables that will be set when running the playbook.
-
-By default we set the Ansible collections path to be relative to the terraform module
-folder. By doing this the versions needed for this module won't interfere with
-other versions.
 EOF
 }
 
@@ -80,30 +76,5 @@ variable "tags_skip" {
   default     = []
   description = "Tags to skip when creating the object"
 }
-
-#variable "on_destroy_tags" {
-#type = list(string)
-#default = []
-
-#description = <<EOF
-#If set, the playbook will also be run on destruction of the object, using the
-#specified tags.
-#EOF
-#}
-
-#variable "on_destroy_tags_skip" {
-#type = list(string)
-#default = []
-#description = "Tags to skip when destroying the object"
-#}
-
-#variable "on_destroy_failure" {
-#type    = string
-#default = "continue"
-
-#description = <<EOF
-#Should we fail if the destroy action failed? ["conftinue","fail"] ("continue")
-#EOF
-#}
 
 ###############################################################################
